@@ -1,0 +1,832 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font than Computer Modern for most use cases
+    \usepackage{palatino}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{OptimizationVisualizer}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{今までのおさらい}\label{ux4ecaux307eux3067ux306eux304aux3055ux3089ux3044}
+
+    \section{教師あり学習（機械学習）のアルゴリズム}\label{ux6559ux5e2bux3042ux308aux5b66ux7fd2ux6a5fux68b0ux5b66ux7fd2ux306eux30a2ux30ebux30b4ux30eaux30baux30e0}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  ある複数の入力データ「X」とそれの対となる正解データ「Y」、また正解が未知のデータセット「X\_test」があると仮定する。
+\item
+  XからYを予測するモデルをトレーニングする。
+\item
+  正解が未知のデータセット「X\_test」が入力として与えられた場合、未知の正解「Y\_test」を予測する。
+\end{enumerate}
+
+    \section{教師なし学習(機械学習)のアルゴリズム}\label{ux6559ux5e2bux306aux3057ux5b66ux7fd2ux6a5fux68b0ux5b66ux7fd2ux306eux30a2ux30ebux30b4ux30eaux30baux30e0}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  ある複数の入力データ「X」があるとする
+\item
+  ある複数の入力データ「X」で似た者同士を、特徴が似ている者同士でグルーピングする
+\item
+  未知の入力データ「X\_test」が入力された場合、そのデータがどのクラスタに属するかを予測する
+\end{enumerate}
+
+    \section{強化学習のアルゴリズム}\label{ux5f37ux5316ux5b66ux7fd2ux306eux30a2ux30ebux30b4ux30eaux30baux30e0}
+
+\begin{itemize}
+\tightlist
+\item
+  ある環境に置かれたエージェントが、最適な方策を選び、行動する。
+\item
+  学習中は、うまく行動できた場合に報酬を与える
+\end{itemize}
+
+    \section{今日やること}\label{ux4ecaux65e5ux3084ux308bux3053ux3068}
+
+\begin{itemize}
+\tightlist
+\item
+  すべての機械学習で必須となる最適化のアルゴリズムについて
+\end{itemize}
+
+    \section{最適化とは？}\label{ux6700ux9069ux5316ux3068ux306f}
+
+\begin{itemize}
+\tightlist
+\item
+  機械学習のモデルを使用することで求められた「予測値と」「正解値」の誤差を最小化（もしくは最大化）すること
+\end{itemize}
+
+    \section{最適化関数について}\label{ux6700ux9069ux5316ux95a2ux6570ux306bux3064ux3044ux3066}
+
+\begin{itemize}
+\tightlist
+\item
+  SGD
+\item
+  Momentum
+\item
+  AdaGrad
+\item
+  RMSProp
+\item
+  AdaDelta
+\item
+  Adam
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} notebook
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{copy}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{from} \PY{n+nn}{mpl\PYZus{}toolkits}\PY{n+nn}{.}\PY{n+nn}{mplot3d} \PY{k}{import} \PY{n}{Axes3D}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{def} \PY{n+nf}{function\PYZus{}1}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{l+m+mf}{1.}\PY{o}{/}\PY{l+m+mi}{20} \PY{o}{*} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+        
+        \PY{k}{def} \PY{n+nf}{function\PYZus{}2}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{4} \PY{o}{+} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{/}\PY{l+m+mi}{3} \PY{o}{+} \PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{l+m+mf}{0.5}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+        \PY{k}{def} \PY{n+nf}{numerical\PYZus{}gradient}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{:}
+            \PY{n}{h} \PY{o}{=} \PY{l+m+mi}{1}\PY{n}{e}\PY{o}{\PYZhy{}}\PY{l+m+mi}{5}
+            \PY{n}{grad} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros\PYZus{}like}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+        
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{size}\PY{p}{)}\PY{p}{:}
+                \PY{n}{tmp\PYZus{}val} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+        
+                \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{tmp\PYZus{}val} \PY{o}{+} \PY{n}{h}
+                \PY{n}{fxh1} \PY{o}{=} \PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+        
+                \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{tmp\PYZus{}val} \PY{o}{\PYZhy{}} \PY{n}{h}
+                \PY{n}{fxh2} \PY{o}{=} \PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+        
+                \PY{n}{grad}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{fxh1} \PY{o}{\PYZhy{}} \PY{n}{fxh2}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{h}\PY{p}{)}
+                \PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{tmp\PYZus{}val}
+        
+            \PY{k}{return} \PY{n}{grad}
+        
+        
+        \PY{k}{def} \PY{n+nf}{plot\PYZus{}history}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{history}\PY{p}{)}\PY{p}{:}
+            \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{)}
+            \PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{)}
+            \PY{n}{x1}\PY{p}{,} \PY{n}{x2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{meshgrid}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+            \PY{n}{x3} \PY{o}{=} \PY{n}{f}\PY{p}{(}\PY{p}{[}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{]}\PY{p}{)}
+        
+            \PY{n}{plt}\PY{o}{.}\PY{n}{contour}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{x3}\PY{p}{,} \PY{n}{levels}\PY{o}{=}\PY{p}{[}\PY{n}{i} \PY{o}{*} \PY{l+m+mf}{5.0} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}aspect}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{equal}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{history}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{history}\PY{p}{]}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{o}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+            \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+        
+        
+        \PY{k}{def} \PY{n+nf}{plot3d\PYZus{}history}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{n}{history}\PY{p}{)}\PY{p}{:}
+            \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{)}
+            \PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{)}
+            \PY{n}{x1}\PY{p}{,} \PY{n}{x2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{meshgrid}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+            \PY{n}{x3} \PY{o}{=} \PY{n}{f}\PY{p}{(}\PY{p}{[}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{]}\PY{p}{)}
+            
+            \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+            \PY{n}{ax} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{111}\PY{p}{,} \PY{n}{projection}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3d}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{ax}\PY{o}{.}\PY{n}{plot\PYZus{}surface}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{x3}\PY{p}{)}
+            
+            \PY{n}{p1}\PY{p}{,} \PY{n}{p2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{history}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{history}\PY{p}{]}\PY{p}{)}
+            \PY{n}{p3} \PY{o}{=} \PY{n}{f}\PY{p}{(}\PY{p}{[}\PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{]}\PY{p}{)}
+            \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{p1}\PY{p}{,} \PY{n}{p2}\PY{p}{,} \PY{n}{p3}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{o\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{mew}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}
+            
+            
+        \PY{k}{def} \PY{n+nf}{optimize}\PY{p}{(}\PY{n}{optimizer}\PY{p}{)}\PY{p}{:}
+            \PY{n}{X} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{16.0}\PY{p}{,} \PY{l+m+mf}{10.0}\PY{p}{]}\PY{p}{)}
+            
+            \PY{n}{pos} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3000}\PY{p}{)}\PY{p}{:}
+                \PY{n}{pos}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{copy}\PY{o}{.}\PY{n}{deepcopy}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{p}{)}
+                \PY{n}{g} \PY{o}{=} \PY{n}{numerical\PYZus{}gradient}\PY{p}{(}\PY{n}{function\PYZus{}1}\PY{p}{,} \PY{n}{X}\PY{p}{)}
+                \PY{n}{optimizer}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{g}\PY{p}{)}
+        
+            \PY{n}{plot\PYZus{}history}\PY{p}{(}\PY{n}{function\PYZus{}1}\PY{p}{,} \PY{n}{pos}\PY{p}{)}
+            \PY{n}{plot3d\PYZus{}history}\PY{p}{(}\PY{n}{function\PYZus{}1}\PY{p}{,} \PY{n}{pos}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{optimize2}\PY{p}{(}\PY{n}{optimizer}\PY{p}{)}\PY{p}{:}
+            \PY{n}{X} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{16.0}\PY{p}{,} \PY{l+m+mf}{10.0}\PY{p}{]}\PY{p}{)}
+            
+            \PY{n}{pos} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3000}\PY{p}{)}\PY{p}{:}
+                \PY{n}{pos}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{copy}\PY{o}{.}\PY{n}{deepcopy}\PY{p}{(}\PY{n}{X}\PY{p}{)}\PY{p}{)}
+                \PY{n}{g} \PY{o}{=} \PY{n}{numerical\PYZus{}gradient}\PY{p}{(}\PY{n}{function\PYZus{}2}\PY{p}{,} \PY{n}{X}\PY{p}{)}
+                \PY{n}{optimizer}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{g}\PY{p}{)}
+        
+            \PY{n}{plot\PYZus{}history}\PY{p}{(}\PY{n}{function\PYZus{}2}\PY{p}{,} \PY{n}{pos}\PY{p}{)}
+            \PY{n}{plot3d\PYZus{}history}\PY{p}{(}\PY{n}{function\PYZus{}2}\PY{p}{,} \PY{n}{pos}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{class} \PY{n+nc}{SGD}\PY{p}{:}
+            \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{lr}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{lr} \PY{o}{=} \PY{n}{lr}
+        
+            \PY{k}{def} \PY{n+nf}{update}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{params}\PY{p}{,} \PY{n}{grads}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{params}\PY{o}{.}\PY{n}{size}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{lr} \PY{o}{*} \PY{n}{grads}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} notebook
+         \PY{n}{optimize}\PY{p}{(}\PY{n}{SGD}\PY{p}{(}\PY{n}{lr}\PY{o}{=}\PY{l+m+mf}{0.95}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} notebook
+        \PY{k}{class} \PY{n+nc}{Momentum}\PY{p}{:}
+            \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{lr}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{n}{a}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{lr} \PY{o}{=} \PY{n}{lr}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{a} \PY{o}{=} \PY{n}{a}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{v} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+        
+            \PY{k}{def} \PY{n+nf}{update}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{params}\PY{p}{,} \PY{n}{grads}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{params}\PY{o}{.}\PY{n}{size}\PY{p}{)}\PY{p}{:}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{v}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{a} \PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{v}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{lr} \PY{o}{*} \PY{n}{grads}\PY{p}{[}\PY{n}{i}\PY{p}{]} 
+                    \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{v}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} notebook
+         \PY{n}{optimize}\PY{p}{(}\PY{n}{Momentum}\PY{p}{(}\PY{n}{lr}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{,} \PY{n}{a}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} notebook
+        \PY{k}{class} \PY{n+nc}{AdaGrad}\PY{p}{:}
+            \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{lr}\PY{o}{=}\PY{l+m+mf}{0.001}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{lr} \PY{o}{=} \PY{n}{lr}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{e} \PY{o}{=} \PY{l+m+mi}{1}\PY{n}{e}\PY{o}{\PYZhy{}}\PY{l+m+mi}{8}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+        
+            \PY{k}{def} \PY{n+nf}{update}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{params}\PY{p}{,} \PY{n}{grads}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{params}\PY{o}{.}\PY{n}{size}\PY{p}{)}\PY{p}{:}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{grads}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}
+                    \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{lr} \PY{o}{/} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{e}\PY{p}{)} \PY{o}{*} \PY{n}{grads}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+\end{Verbatim}
+
+    \[
+{h_{0} = \epsilon\\
+h_{t} = h_{t−１} + \nabla E(\mathbf{w}^{t})^{2}\\
+\eta_{t} = \frac{\eta_{0}}{\sqrt{h_{t}}}\\
+\mathbf{w}^{t+1} = \mathbf{w}^{t} - \eta_{t} \nabla E(\mathbf{w}^{t})
+}
+\]
+
+    \section{解説}\label{ux89e3ux8aac}
+
+\begin{itemize}
+\tightlist
+\item
+  np.sqrtはルートのこと
+\item
+  self.hの値が大きくなるほど、self.h{[}i{]}に加算されてゆくので、下の段の「self.lr
+  / (np.sqrt(self.h{[}i{]}) + self.e)」の値が小さくなる
+\item
+  勾配も回数を重ねるごとに小さくなってゆく
+\item
+  いままでの勾配を加味して降ってゆく
+\item
+  ゼロ除算をさけるため、分母にself.eを追加
+\item
+  更新があまり行われていないパラメータについては、htの値が小さいままで、ntの値が大きくなるので、learning
+  rateが大きくなる
+\item
+  学習初期に勾配のきついところを通ると、学習率が小さくなってしまい、学習が進まなくなる問題点
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} notebook
+         \PY{n}{optimize}\PY{p}{(}\PY{n}{AdaGrad}\PY{p}{(}\PY{n}{lr}\PY{o}{=}\PY{l+m+mf}{1.5}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} notebook
+        \PY{k}{class} \PY{n+nc}{RMSProp}\PY{p}{:}
+            \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{lr}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{n}{a}\PY{o}{=}\PY{l+m+mf}{0.99}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{lr} \PY{o}{=} \PY{n}{lr}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{a} \PY{o}{=} \PY{n}{a}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{e} \PY{o}{=} \PY{l+m+mi}{1}\PY{n}{e}\PY{o}{\PYZhy{}}\PY{l+m+mi}{8}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+                
+        
+            \PY{k}{def} \PY{n+nf}{update}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{params}\PY{p}{,} \PY{n}{grads}\PY{p}{)}\PY{p}{:}
+                \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{params}\PY{o}{.}\PY{n}{size}\PY{p}{)}\PY{p}{:}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{a} \PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{a}\PY{p}{)} \PY{o}{*} \PY{n}{grads}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}
+                    \PY{c+c1}{\PYZsh{}print(self.h[i])}
+                    \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{lr}  \PY{o}{/} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{e}\PY{p}{)} \PY{o}{*} \PY{n}{grads}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                    \PY{c+c1}{\PYZsh{}print(self.lr/(np.sqrt(self.h[0]) + self.e))}
+\end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  grads{[}i{]} ** 2で勾配が自乗されて小さくなる
+\item
+  self.lr * grads{[}i{]}　を 大きくなった(√self.h{[}i{]}* self.e)で割る
+\item
+  勾配の係数部分「self.lr/(np.sqrt(self.h{[}i{]}) +
+  self.e)」が徐々に大きくなる？
+\item
+  AdaGradでは過去の勾配情報を全て均等に考慮して計算が行われていたが、より直近の勾配情報を優先して計算するようになった
+\item
+  移動指数平均を採用
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} notebook
+         \PY{n}{optimize}\PY{p}{(}\PY{n}{RMSProp}\PY{p}{(}\PY{n}{lr}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} notebook
+         \PY{k}{class} \PY{n+nc}{AdaDelta}\PY{p}{:}
+             \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{p}\PY{o}{=}\PY{l+m+mf}{0.95}\PY{p}{,} \PY{n}{e}\PY{o}{=}\PY{l+m+mi}{1}\PY{n}{e}\PY{o}{\PYZhy{}}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{p} \PY{o}{=} \PY{n}{p}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{e} \PY{o}{=} \PY{n}{e}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{s} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+         
+             \PY{k}{def} \PY{n+nf}{update}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{params}\PY{p}{,} \PY{n}{grads}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{params}\PY{o}{.}\PY{n}{size}\PY{p}{)}\PY{p}{:}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{p} \PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{p}\PY{p}{)} \PY{o}{*} \PY{n}{grads}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}
+                     \PY{n}{v} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{s}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{e}\PY{p}{)} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{e}\PY{p}{)} \PY{o}{*} \PY{n}{grads}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                     \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}}\PY{o}{=} \PY{n}{v}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{s}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{p} \PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{s}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{p}\PY{p}{)} \PY{o}{*} \PY{n}{v} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}
+\end{Verbatim}
+
+    \begin{itemize}
+\item
+  vtの分子はstなので、stが大きくなるほど勾配が大きくなる。
+\item
+  勾配が大きいほどvtが大きくなる　vtが大きくなると、次のステップで使うstも大きくなる。（vtの２乗しているから）次のステップで使うstが大きいほど、次のステップでの勾配も大きくなる。stが大きくなるほど、vtも大きくなる
+\item
+  まとめ
+\item
+  前のステップでの勾配が大きいと、次のステップでの勾配は大きくなる
+\item
+  前のステップでの勾配が小さいと、次のステップでの勾配は小さくなる \[
+  {h_{t} = \rho h_{t−１} + (1 - \rho) \nabla E(\mathbf{w}^{t})^{2}\\
+  v_{t} = \frac{\sqrt{s_{t} + \epsilon}}{\sqrt{h_{t} + \epsilon}} \nabla E(\mathbf{w}^{t})\\
+  s_{t+1} = \rho s_{t} + (1 - \rho) v_{t}^{2}\\
+  \mathbf{w}^{t+1} = \mathbf{w}^{t} - v_{t}
+  }
+  \]
+\item
+  過去の勾配の２乗和を全て使うのではなくて、最近のものだけを使う。そのために、指数平滑移動平均を使う。
+\item
+  ht\ldots{}過去の勾配の平均
+\item
+  vt\ldots{}今回の更新量を求めるために単位合わせ(今回の勾配 *
+  (過去の更新差分の平均/過去の勾配の平均))
+\item
+  st+1\ldots{}更新差分の平均
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} notebook
+         \PY{n}{optimize}\PY{p}{(}\PY{n}{AdaDelta}\PY{p}{(}\PY{n}{e}\PY{o}{=}\PY{l+m+mi}{1}\PY{n}{e}\PY{o}{\PYZhy{}}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} notebook
+         \PY{k}{class} \PY{n+nc}{Adam}\PY{p}{:}
+             \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{lr}\PY{o}{=}\PY{l+m+mf}{0.001}\PY{p}{,} \PY{n}{b1}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{,} \PY{n}{b2}\PY{o}{=}\PY{l+m+mf}{0.999}\PY{p}{,} \PY{n}{e}\PY{o}{=}\PY{l+m+mi}{1}\PY{n}{e}\PY{o}{\PYZhy{}}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{lr} \PY{o}{=} \PY{n}{lr}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{b1} \PY{o}{=} \PY{n}{b1}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{b2} \PY{o}{=} \PY{n}{b2}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{e} \PY{o}{=} \PY{n}{e}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{m} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{v} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{t} \PY{o}{=} \PY{l+m+mi}{1}
+         
+             \PY{k}{def} \PY{n+nf}{update}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{params}\PY{p}{,} \PY{n}{grads}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{params}\PY{o}{.}\PY{n}{size}\PY{p}{)}\PY{p}{:}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{m}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{b1} \PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{m}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{b1}\PY{p}{)} \PY{o}{*} \PY{n}{grads}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{v}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{b2} \PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{v}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{b2}\PY{p}{)} \PY{o}{*} \PY{n}{grads}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}
+                     \PY{n}{mt} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{m}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{/} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{b1} \PY{o}{*}\PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{t}\PY{p}{)}
+                     \PY{n}{vt} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{v}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{/} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{b2} \PY{o}{*}\PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{t}\PY{p}{)}
+                     \PY{n}{params}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{lr} \PY{o}{*} \PY{n}{mt} \PY{o}{/} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{vt}\PY{p}{)} \PY{o}{+} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{e}\PY{p}{)}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{t} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+\end{Verbatim}
+
+    \[{m_{t+1} = \beta_{1} m_{t} + (1 - \beta_{1}) \nabla E(\mathbf{w}^{t})\\
+v_{t+1} = \beta_{2} v_{t} + (1 - \beta_{2}) \nabla E(\mathbf{w}^{t})^{2}\\
+\hat{m} = \frac{m_{t+1}}{1 - \beta_{1}^{t}}\\
+\hat{v} = \frac{v_{t+1}}{1 - \beta_{2}^{t}}\\
+\mathbf{w}^{t+1} = \mathbf{w}^{t} - \alpha \frac{\hat{m}}{\sqrt{\hat{v}} + \epsilon}
+}
+\] - β1,β2をtステップ数べき乗 -
+最後の式では、勾配の一次モーメント(平均)を二次モーメント(分散)の指数移動平均で割る　
+- 「(過去の更新差分の平均 / 過去の勾配の平均)*
+現在の勾配」　単位合わせすることで、現在の更新量が求まる　 -
+勾配のスケールは一次モーメントと二次モーメントの比によってキャンセルされるためstep
+sizeが安定する(勾配が１だと1/1=1のstep
+sizeになる。勾配が0.1だと0.1/0.01=10で、10倍大きなstep
+sizeになる。学習が進むにつれて、どうしれもstep
+sizeが小さくなりがちな傾向をこれで回避) -
+大きくなったvは最終的に、最後の式の分母になるので、vが大きくなるほど重みの修正量が少なくなる。
+-
+式の３、４行目のβ\^{}tの部分　βは1より小さいので、べき乗すると０に近づく。1から引いているので、ステップ数を重ねるほど分母が大きくなる。つまり、式１、２行目の値は小さくなる。mはvに比べて小さくなるスピードが早い。
+-
+\[{O[m] \sim O[g] (1-\beta_1) \sum_{k=1}^t \beta_1^{t-k} = O[g](1-\beta_1^t) \tag{3.23}
+}\](詳しくはhttps://qiita.com/deaikei/items/29d4550fa5066184329a\#adam)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{optimize}\PY{p}{(}\PY{n}{Adam}\PY{p}{(}\PY{n}{lr}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    \section{参考文献}\label{ux53c2ux8003ux6587ux732e}
+
+\begin{itemize}
+\tightlist
+\item
+  https://qiita.com/tokkuman/items/1944c00415d129ca0ee9 「Optimizer :
+  深層学習における勾配法について」
+\item
+  https://www.oreilly.co.jp/books/9784873117584/　「ゼロから作るDeep
+  Learning ――Pythonで学ぶディープラーニングの理論と実装」
+\item
+  https://qiita.com/deaikei/items/29d4550fa5066184329a 「OPTIMIZER 入門
+  \textasciitilde{}線形回帰からAdamからEveまで」
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
