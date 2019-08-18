@@ -285,14 +285,14 @@ loss = (1-λ) × residual loss + λ × discrimination loss
 - https://github.com/eriklindernoren/PyTorch-GAN
 
 ## 引用元、参考文献のリスト
-[1]: https://qiita.com/kenmatsu4/items/b029d697e9995d93aa24
+[1] https://qiita.com/kenmatsu4/items/b029d697e9995d93aa24
 
-[2]: Thomas Schlegl, Philipp Seeböck, Sebastian M. Waldstein, Ursula Schmidt-Erfurth, Georg Langs. Unsupervised Anomaly Detection with Generative Adversarial Networks to Guide Marker Discovery(https://arxiv.org/abs/1703.05921)
+[2] Thomas Schlegl, Philipp Seeböck, Sebastian M. Waldstein, Ursula Schmidt-Erfurth, Georg Langs. Unsupervised Anomaly Detection with Generative Adversarial Networks to Guide Marker Discovery(https://arxiv.org/abs/1703.05921)
 
-[3]: AnoGAN (https://link.springer.com/chapter/10.1007/978-3-319-59050-9_12)
+[3] AnoGAN (https://link.springer.com/chapter/10.1007/978-3-319-59050-9_12)
 
-[4]: つくりながら学ぶ！PyTorchによる発展ディープラーニン(https://book.mynavi.jp/ec/products/detail/id=104855)
+[4] つくりながら学ぶ！PyTorchによる発展ディープラーニン(https://book.mynavi.jp/ec/products/detail/id=104855)
 
-[5]: YutaroOgawa/pytorch_advanced: 書籍「つくりながら学ぶ! PyTorchによる発展ディープラーニング」の実装コードを配置したリポジトリです(https://github.com/YutaroOgawa/pytorch_advanced/blob/master/6_gan_anomaly_detection/6-2_AnoGAN.ipynb)
-[6]:  (https://qiita.com/kenmatsu4/items/b029d697e9995d93aa24)
+[5] YutaroOgawa/pytorch_advanced: 書籍「つくりながら学ぶ! PyTorchによる発展ディープラーニング」の実装コードを配置したリポジトリです(https://github.com/YutaroOgawa/pytorch_advanced/blob/master/6_gan_anomaly_detection/6-2_AnoGAN.ipynb)
+[6]  (https://qiita.com/kenmatsu4/items/b029d697e9995d93aa24)
 
